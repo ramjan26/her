@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --pink:#efd0db;
+            --pink-soft:#f7e7ee;
+            --cream:#fdf8f3;
+            --white:#ffffff;
+            --text:#2d2a2a;
+            --shadow:0 20px 50px rgba(0,0,0,.12);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{
+            font-family:'Poppins',sans-serif;
+            background:var(--cream);
+            color:var(--text);
+            overflow-x:hidden;
+        }
+        .navbar{
+            position:fixed;top:0;left:0;width:100%;
+            padding:18px 8%;display:flex;justify-content:space-between;align-items:center;
+            z-index:999;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(255,255,255,.4);
+        }
+        .logo{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:500;letter-spacing:1px;}
+        .nav-links{display:flex;gap:30px;list-style:none;}
+        .nav-links a{text-decoration:none;color:#555;font-size:.95rem;font-weight:500;transition:.3s;position:relative;}
+        .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:#c991a7;transition:.3s;}
+        .nav-links a:hover::after{width:100%;}
+        .nav-links a:hover{color:#c991a7;}
+
+        .hero{min-height:100vh;background:linear-gradient(180deg,var(--pink),var(--pink-soft),var(--cream));
+            display:flex;align-items:center;justify-content:space-between;padding:130px 10% 100px;gap:50px;
+        }
+        .hero-content{max-width:550px;}
+        .hero h1{font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:300;line-height:.9;color:white;letter-spacing:-2px;}
+        .hero p{margin-top:20px;font-size:1.1rem;line-height:1.8;color:white;}
+
+        .hero-slider{position:relative;width:430px;height:570px;box-shadow:0 40px 90px rgba(0,0,0,0.3);border-radius:32px;overflow:hidden;}
+        .slide{position:absolute;width:100%;height:100%;opacity:0;transition:1s ease;transform:translateX(40px) scale(.9) rotate(-5deg);}
+        .slide.active{opacity:1;transform:translateX(0) scale(1) rotate(0);z-index:10;}
+        .slide img{width:100%;height:100%;object-fit:cover;background:white;padding:12px;box-shadow:var(--shadow);cursor:pointer;transition:.4s;}
+        .slide.active img{transform:scale(1.09);filter:brightness(1.05) saturate(1.4);}
+
+        .section{padding:90px 8%;}
+        .container{max-width:1200px;margin:auto;}
+        .section h2{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:400;text-align:center;margin-bottom:25px;}
+        .section p{max-width:750px;margin:auto;text-align:center;line-height:2;font-size:1rem;}
+
+        /* Sorry Section */
+        .sorry-gallery{display:flex;justify-content:center;gap:40px;margin-top:60px;flex-wrap:wrap;}
+        .sorry-card{background:white;padding:14px;border-radius:26px;box-shadow:var(--shadow);max-width:320px;transition:all 0.4s;}
+        .sorry-card:hover{transform:translateY(-15px);box-shadow:0 35px 70px rgba(0,0,0,0.18);}
+        .sorry-card img{width:100%;border-radius:18px;cursor:pointer;}
+
+        /* About Her - Horizontal Slider */
+        .about-layout{display:grid;grid-template-columns:1fr 420px;gap:70px;align-items:center;margin-top:50px;}
+        .about-image img{width:100%;background:white;padding:10px;border-radius:24px;cursor:pointer;box-shadow:var(--shadow);}
+
+        .photo-slider-wrapper {
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+        .photo-slider::-webkit-scrollbar { display: none; }
+        .gallery-item {
+            background:white;padding:10px;border-radius:22px;box-shadow:0 12px 35px rgba(0,0,0,0.1);
+            min-width: 280px;
+            flex-shrink: 0;
+            transition: all 0.4s;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        .gallery-item:hover { transform: scale(1.03); }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(201, 145, 167, 0.9);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+        .slider-btn.left { left: -20px; }
+        .slider-btn.right { right: -20px; }
+
+        .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;margin-top:50px;}
+        .video-card{background:white;padding:12px;border-radius:20px;box-shadow:var(--shadow);}
+        video{width:100%;border-radius:12px;}
+
+        .final-section{background:linear-gradient(180deg,var(--cream),var(--pink-soft));}
+        .final-section h2{font-size:6rem;line-height:.9;}
+
+        #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;z-index:9999;}
+        #lightboxImage{max-width:90%;max-height:90%;}
+        #closeLightbox{position:absolute;top:25px;right:35px;font-size:50px;color:white;cursor:pointer;}
+
+        #scrollTop{position:fixed;right:25px;bottom:25px;width:50px;height:50px;border:none;border-radius:50%;background:#c991a7;color:white;font-size:20px;cursor:pointer;display:none;box-shadow:var(--shadow);}
+
+        .reveal{opacity:0;transform:translateY(60px);transition:1s;}
+        .reveal.active{opacity:1;transform:none;}
+
+        /* Music & Hearts */
+        #musicToggle{position:fixed;bottom:90px;right:25px;z-index:1000;background:#c991a7;color:white;border:none;width:58px;height:58px;border-radius:50%;font-size:26px;cursor:pointer;box-shadow:var(--shadow);}
+        #hearts-container{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden;}
+        .heart{position:absolute;color:#ff6b9d;font-size:28px;animation:floatHeart linear forwards;text-shadow:0 0 10px rgba(255,107,157,0.7);}
+        @keyframes floatHeart{0%{transform:translateY(110vh) rotate(0deg);} 100%{transform:translateY(-120px) rotate(35deg);opacity:0;}}
+
+        @media(max-width:900px){
+            .hero{flex-direction:column;text-align:center;padding-top:140px;}
+            .hero h1{font-size:4.5rem;}
+            .about-layout{grid-template-columns:1fr;}
+            .hero-slider{width:320px;height:420px;}
+            .slider-btn { width: 40px; height: 40px; font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">For Someone Special</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#sorry">Sorry</a></li>
+            <li><a href="#about">Her</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#final">Note</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="C:\Users\Acer\Downloads\her\music\WILDFLOWER - HIT ME HARD AND SOFT (320 kbps).mp3" type="audio/mpeg">
+</audio>
+
+<!-- HERO -->
+<section id="hero" class="hero">
+    <div class="hero-content">
+        <h1>For Someone<br>Special</h1>
+        <p>A little corner of the internet made just for you!!!</p>
+    </div>
+    <div class="hero-slider">
+        <div class="slide active"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0012.jpg" onclick="openImage(this.src)" alt=""></div>
+        <div class="slide"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0018.jpg" onclick="openImage(this.src)" alt=""></div>
+        <div class="slide"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0019.jpg" onclick="openImage(this.src)" alt=""></div>
+        <div class="slide"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0036.jpg" onclick="openImage(this.src)" alt=""></div>
+        <div class="slide"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0037.jpg" onclick="openImage(this.src)" alt=""></div>
+    </div>
+</section>
+
+<!-- SORRY -->
+<section id="sorry" class="section reveal">
+    <div class="container">
+        <h2>I'm Sorry ꫂ❁</h2>
+        <p>Sometimes words don't come out the way they're meant to.<br><br>I never wanted to make you uncomfortable.<br><br>If my words hurt you, I'm genuinely sorry.</p>
+        <div class="sorry-gallery">
+            <div class="sorry-card"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0038.jpg" onclick="openImage(this.src)" alt=""></div>
+            <div class="sorry-card"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0039.jpg" onclick="openImage(this.src)" alt=""></div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT HER -->
+<section id="about" class="section reveal">
+    <div class="container">
+        <h2>Her ✮⋆˙</h2>
+        <div class="about-layout">
+            <div class="about-text">
+                <p>She doesn't need to be loud to leave an impression on me. There is something about her quiet nature that makes me want to know her more. She's not the kind of person who is comfortable with everyone, and I think that's what makes her so genuine. Her kindness appears in the smallest moments, often without her even realizing it. She is stronger than she gives herself credit for, carrying her struggles quietly while still managing to care about the people around her. What I admire most is how she can make ordinary days feel special. Even a simple conversation with her can stay on my mind for hours. She may not always see it, but the little things about her—her smile, her eyes, her way of being herself—are what make her so special to me.</p>
+            </div>
+            <div class="about-image">
+                <img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0044.jpg" onclick="openImage(this.src)" alt="">
+            </div>
+        </div>
+
+        <!-- Horizontal Scroll Slider -->
+        <div class="photo-slider-wrapper">
+            <button class="slider-btn left" onclick="slideLeft()">‹</button>
+            <div class="photo-slider" id="photoSlider">
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0063.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0064.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0070.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0071.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0079.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0082.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0084.jpg" onclick="openImage(this.src)" alt=""></div>
+                <div class="gallery-item"><img src="C:\Users\Acer\Downloads\her\images\IMG-20260616-WA0093.jpg" onclick="openImage(this.src)" alt=""></div>
+            </div>
+            <button class="slider-btn right" onclick="slideRight()">›</button>
+        </div>
+    </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="section reveal">
+    <div class="container">
+        <h2>Kanmani 𐙚</h2>
+        <div class="video-grid">
+            <div class="video-card"><video controls poster="C:\Users\Acer\Downloads\her\images\WhatsApp Image 2026-06-26 at 3.24.08 PM.jpeg"><source src="C:\Users\Acer\Downloads\her\videos\VID-20260616-WA0072.mp4"></video></div>
+            <div class="video-card"><video controls poster="C:\Users\Acer\Downloads\her\images\WhatsApp Image 2026-06-26 at 3.24.08 PM.jpeg"><source src="C:\Users\Acer\Downloads\her\videos\VID-20260616-WA0094.mp4"></video></div>
+            <div class="video-card"><video controls poster="C:\Users\Acer\Downloads\her\images\WhatsApp Image 2026-06-26 at 3.24.08 PM.jpeg"><source src="C:\Users\Acer\Downloads\her\videos\VID-20260616-WA0105.mp4"></video></div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL -->
+<section id="final" class="section final-section reveal">
+    <div class="container">
+        <h2>What I Want<br>You To Know ˗ˏˋ ♡ ˎˊ˗</h2>
+        <p>You don't need to be perfect.<br><br>You don't need to prove anything.<br><br>You don't need to become someone else.<br><br>Thank you for being exactly who you are.</p>
+        
+        <p style="margin-top:40px; font-size:1.35rem; color:#c991a7; font-weight:500;">
+            This is the day the Lord has made.<br>
+            Let us rejoice and be glad in it.
+        </p>
+    </div>
+</section>
+
+<!-- FLOATING HEARTS -->
+<div id="hearts-container"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+    <span id="closeLightbox">×</span>
+    <img id="lightboxImage">
+</div>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop">↑</button>
+
+<script>
+    // Hero Slider
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    function showSlide(i) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[i].classList.add('active');
+    }
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    setInterval(nextSlide, 4200);
+
+    // Photo Slider
+    function slideLeft() {
+        document.getElementById('photoSlider').scrollBy({ left: -300, behavior: 'smooth' });
+    }
+    function slideRight() {
+        document.getElementById('photoSlider').scrollBy({ left: 300, behavior: 'smooth' });
+    }
+
+    // Music
+    const music = document.getElementById('bgMusic');
+    const musicBtn = document.createElement('button');
+    musicBtn.id = 'musicToggle';
+    musicBtn.innerHTML = '♪';
+    document.body.appendChild(musicBtn);
+    let isPlaying = false;
+    musicBtn.addEventListener('click', () => {
+        if (isPlaying) { music.pause(); musicBtn.innerHTML = '♪'; }
+        else { music.play().catch(()=>{}); musicBtn.innerHTML = '❚❚'; }
+        isPlaying = !isPlaying;
+    });
+
+    // Floating Hearts
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = ['♥','💗','♡','💖'][Math.floor(Math.random()*4)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 7 + 6) + 's';
+        heart.style.fontSize = (Math.random() * 20 + 26) + 'px';
+        document.getElementById('hearts-container').appendChild(heart);
+        setTimeout(() => heart.remove(), 15000);
+    }
+    setInterval(createHeart, 420);
+    createHeart();
+
+    // Lightbox
+    function openImage(src) {
+        document.getElementById('lightbox').style.display = 'flex';
+        document.getElementById('lightboxImage').src = src;
+        document.body.style.overflow = 'hidden';
+    }
+    document.getElementById('closeLightbox').addEventListener('click', () => {
+        document.getElementById('lightbox').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Scroll Top
+    const scrollBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+        scrollBtn.style.display = window.scrollY > 500 ? 'flex' : 'none';
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+</body>
+</html>
